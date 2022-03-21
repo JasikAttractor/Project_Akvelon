@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <title>Document</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/edit/{id}(id=${project.getId()})}">Edit project <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/delete/{id}(id=${project.getId()})}">Delete project</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/addTask/{id}(id=${project.getId()})}">Add task</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<table class="table table-hover">
+    <thead>
+    <tr class=" row justify-content-center">
+        <th class="col-md-1" scope="col"> Id </th>
+        <th class="col-md-1" scope="col"> Name </th>
+        <th class="col-md-1" scope="col"> Start date </th>
+        <th class="col-md-1" scope="col"> End date </th>
+        <th class="col-md-1" scope="col"> Status </th>
+        <th class="col-md-1" scope="col"> Priority </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="row justify-content-center">
+        <th class="col-md-1"><span th:text="${project.getId()}"> Title </span></th>
+        <th class="col-md-1"><span th:text="${project.getName()}"> Name </span></th>
+        <th class="col-md-1"><span th:text="${project.getStartDate()}"> Start date </span></th>
+        <th class="col-md-1"><span th:text="${project.getEndDate()}"> End date </span></th>
+        <th class="col-md-1"><span th:text="${project.getProjectStatus()}"> Status </span></th>
+        <th class="col-md-1"><span th:text="${project.getPriority()}"> Priority </span></th>
+    </tr>
+    </tbody>
+</table>
+<div th:if="${tasks.isEmpty()}">
+    <h3 style="text-align: center">No active tasks</h3>
+</div>
+<div th:unless="${tasks.isEmpty()}">
+    <h2 style="text-align: center">Tasks</h2>
+    <table class="table table-hover">
+ <thead>
+ <tr class=" row justify-content-center">
+     <th class="col-md-1" scope="col">Name</th>
+     <th class="col-md-1" scope="col">Status</th>
+     <th class="col-md-1" scope="col">Priority</th>
+ </tr>
+ </thead>
+    <tbody>
+    <tr class="row justify-content-center" th:each="task : ${tasks}">
+        <th class="col-md-1" scope="col"><a th:text="${task.getName()}" th:href="@{/showTask/{id}(id=${task.getId()})}"> Name </a></th>
+        <th class="col-md-1" scope="col" th:text="${task.getStatus()}"></th>
+        <th class="col-md-1" scope="col" th:text="${task.getPriority()}"></th>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+
+</body>
+</html>
